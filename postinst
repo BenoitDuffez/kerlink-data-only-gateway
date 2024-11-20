@@ -1,0 +1,7 @@
+#!/bin/sh
+
+/etc/init.d/firewall restart
+
+monit reload
+monit monitor helium_gateway
+monit start helium_gateway

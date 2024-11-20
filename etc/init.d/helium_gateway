@@ -1,0 +1,30 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Short-Description:    Helium Lite Hotspot Init Script
+### END INIT INFO
+ 
+set -e
+
+BINARY="/usr/bin/helium_gateway"
+CONFIGFILE="/etc/helium_gateway/settings.toml"
+ 
+case "$1" in
+  start)
+	nohup ${BINARY} -c ${CONFIGFILE} server | logger -t helium_gateway &
+        monit monitor helium_gateway
+	;;
+  stop)
+	monit unmonitor helium_gateway
+	kill $(pidof helium_gateway)
+	;;
+  restart)
+  	$0 stop
+	$0 start
+	;;
+  *)
+	echo "Usage: $0 { start | stop | restart }" >&2
+	exit 1
+	;;
+esac
+ 
+exit 0

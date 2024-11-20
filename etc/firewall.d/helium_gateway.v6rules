@@ -1,0 +1,7 @@
+*filter
+-I OUTPUT -p tcp -m tcp --dport 6080 -j ACCEPT
+-I OUTPUT -p tcp -m tcp --dport 9080 -j ACCEPT
+-I OUTPUT -p tcp -m tcp --dport 7080 -j ACCEPT
+-I OUTPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+-I INPUT -p tcp -m state --state RELATED,ESTABLISHED -j ACCEPT
+COMMIT
