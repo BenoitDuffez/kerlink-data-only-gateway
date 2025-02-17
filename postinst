@@ -5,3 +5,16 @@
 monit reload
 monit monitor helium_gateway
 monit start helium_gateway
+
+. /etc/default/lorad
+conf=$(basename "$CONFIGURATION_FILE")
+if [ "$conf" == "lorad.json" ] || [ "$conf" == "" ]; then
+  conf=US915-US.json
+fi
+
+klk_apps_config \
+  --activate-cpf \
+  --lns-server 127.0.0.1 \
+  --lns-dport 1700 \
+  --lns-uport 1700 \
+  --loradconf "$conf"
